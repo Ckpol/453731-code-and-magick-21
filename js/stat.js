@@ -79,5 +79,4 @@ window.renderStatistics = function (ctx, players, times) {
         CLOUD_Y + CLOUD_HEIGHT - GAP - TEXT_HIGHT - (BAR_HEIGHT * times[i] / maxTime) - GAP
     );
   }
-
 };
