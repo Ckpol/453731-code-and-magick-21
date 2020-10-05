@@ -4,6 +4,7 @@ var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'К
 var WIZARD_LAST_NAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var WIZARD_COLOR = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
+var WIZARDS_QUANTITY = 4;
 
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
@@ -23,28 +24,19 @@ var getFullName = function (names, lastnames) {
   return fullName;
 };
 
-var wizards = [
-  {
-    name: getFullName(WIZARD_NAMES, WIZARD_LAST_NAMES),
-    coatColor: getRandomItem(WIZARD_COLOR),
-    eyesColor: getRandomItem(WIZARD_EYES_COLOR)
-  },
-  {
-    name: getFullName(WIZARD_NAMES, WIZARD_LAST_NAMES),
-    coatColor: getRandomItem(WIZARD_COLOR),
-    eyesColor: getRandomItem(WIZARD_EYES_COLOR)
-  },
-  {
-    name: getFullName(WIZARD_NAMES, WIZARD_LAST_NAMES),
-    coatColor: getRandomItem(WIZARD_COLOR),
-    eyesColor: getRandomItem(WIZARD_EYES_COLOR)
-  },
-  {
-    name: getFullName(WIZARD_NAMES, WIZARD_LAST_NAMES),
-    coatColor: getRandomItem(WIZARD_COLOR),
-    eyesColor: getRandomItem(WIZARD_EYES_COLOR)
-  }
-];
+var createWizard = function (names, lastNames, clothesColor, eyesColor) {
+  var wizard = {};
+  wizard.name = getFullName(names, lastNames);
+  wizard.coatColor = getRandomItem(clothesColor);
+  wizard.eyesColor = getRandomItem(eyesColor);
+
+  return wizard;
+};
+
+var wizards = [];
+for (var j = 0; j < WIZARDS_QUANTITY; j++) {
+  wizards.push(createWizard(WIZARD_NAMES, WIZARD_LAST_NAMES, WIZARD_COLOR, WIZARD_EYES_COLOR));
+}
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
