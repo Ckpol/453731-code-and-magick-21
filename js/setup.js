@@ -70,6 +70,7 @@ var fireballColor = setup.querySelector('.setup-fireball-wrap');
 var wizardCoatInput = setup.querySelector('input[name = "coat-color"]');
 var wizardEyesInput = setup.querySelector('input[name = "eyes-color"]');
 var fireballColorInput = fireballColor.querySelector('input[name = "fireball-color"]');
+var form = setup.querySelector('.setup-wizard-form');
 
 var onPopupEscPress = function (evt) {
   if (evt.key === 'Escape') {
@@ -78,20 +79,20 @@ var onPopupEscPress = function (evt) {
   }
 };
 
-var onSubmitPopupEnterPress = function (evt) {
-  if (evt.key === 'Enter') {
-    closePopup();
-  }
+var onFormStopSubmit = function (evt) {
+  evt.preventDefault();
 };
 
 var onInputNameFocus = function (evt) {
   var target = evt.target;
   if (evt.type === 'focusin' && target.name === 'username') {
     document.removeEventListener('keydown', onPopupEscPress);
+    setup.addEventListener('submit', onFormStopSubmit);
   }
 
   if (evt.type === 'focusout') {
     document.addEventListener('keydown', onPopupEscPress);
+    setup.removeEventListener('submit', onFormStopSubmit);
   }
 };
 
@@ -100,16 +101,19 @@ var openPopup = function () {
   document.addEventListener('keydown', onPopupEscPress);
   setup.addEventListener('focusin', onInputNameFocus);
   setup.addEventListener('focusout', onInputNameFocus);
-  setup.addEventListener('keydown', onSubmitPopupEnterPress);
 };
+
 
 var closePopup = function () {
   setup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
   setup.removeEventListener('focusin', onInputNameFocus);
   setup.removeEventListener('focusout', onInputNameFocus);
-  setup.removeEventListener('keydown', onSubmitPopupEnterPress);
 };
+
+if (!setup.matches('hidden')) {
+  openPopup();
+}
 
 setupOpen.addEventListener('click', function () {
   openPopup();
@@ -132,6 +136,7 @@ setupClose.addEventListener('keydown', function (evt) {
 });
 
 setupSubmit.addEventListener('click', function () {
+  form.submit();
   closePopup();
 });
 
